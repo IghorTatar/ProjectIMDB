@@ -1,14 +1,18 @@
-from imdb import IMDb
+from imdb import IMDb, IMDbError
 ia = IMDb()
-asd = ia.search_movie('matrix')
-if len(asd) == 0:
-    print('yes')
-else:
-    ID = asd[0].movieID
-    #dsa = 'The Matrix'
-    e = ia.get_movie(ID)
-    print(e)
-# get a movie
-movie = ia.get_movie('0133093')
-for key in movie:
-    print(key)
+print('Введите название фильма:')
+list_ = input()
+movies = ia.search_movie(list_)
+print(movies)
+if len(movies) == 0:
+    flag = True
+    while flag:
+        print('Нет ни одного фильма с подобным названием. Попробуй еще:')
+        movies = ia.search_movie(input())
+        if len(movies) != 0:
+            flag = False
+print('Какой из нижеперечисленных фильмов вас интересует?')
+result = ''
+for movie in movies:
+    result += str(movie['title']) + ', '
+print(result.rstrip(', '))
