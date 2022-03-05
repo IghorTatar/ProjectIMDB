@@ -13,3 +13,4 @@ class States(Enum):
     S_ENTER_FILM = "1"
     S_ENTER_TRUE_FILM = "2"
     S_ENTER_COMMAND = "3"
+    S_END = "4"
