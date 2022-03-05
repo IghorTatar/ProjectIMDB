@@ -75,7 +75,7 @@ def user_entering_true_film(message):
         else:
             result_movie = ia.get_movie(ID)
             bot.send_message(message.chat.id, "Выберите, какая информация о фильме вас интересует:")
-            bot.send_message(message.chat.id, "дата выхода в России - data,")
+            bot.send_message(message.chat.id, "дата выхода в России - date,")
             bot.send_message(message.chat.id, "сборы фильма - box office")
             dbworker.set_state(message.chat.id, config.States.S_ENTER_COMMAND.value)
 
@@ -84,8 +84,8 @@ def user_entering_true_film(message):
 def user_entering_command(message):
     global result_movie
     request = message.text
-    if request in ['data', 'box office']:
-        if request == 'data':
+    if request in ['date', 'box office']:
+        if request == 'date':
             bot.send_message(message.chat.id, result_movie.data['original air date'])
         elif request == 'box office':
             bot.send_message(message.chat.id, result_movie.data['box office']['Cumulative Worldwide Gross'])
