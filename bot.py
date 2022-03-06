@@ -85,10 +85,13 @@ def user_entering_command(message):
     global result_movie
     request = message.text
     if request in ['date', 'box office']:
-        if request == 'date':
-            bot.send_message(message.chat.id, result_movie.data['original air date'])
-        elif request == 'box office':
-            bot.send_message(message.chat.id, result_movie.data['box office']['Cumulative Worldwide Gross'])
+        try:
+            if request == 'date':
+                bot.send_message(message.chat.id, result_movie.data['original air date'])
+            elif request == 'box office':
+                bot.send_message(message.chat.id, result_movie.data['box office']['Cumulative Worldwide Gross'])
+        except KeyError:
+            bot.send_message(message.chat.id, "В моих базах данных нет этой информации о выбранном фильме/сериале.")
     else:
         bot.send_message(message.chat.id, 'Такой команды нет.')
     bot.send_message(message.chat.id, "Это последний запрос?: 'yes' или 'no' (без кавычек)")
