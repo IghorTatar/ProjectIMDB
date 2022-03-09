@@ -22,7 +22,7 @@ def cmd_start(message):
     elif state == config.States.S_END.value:
         bot.send_message(message.chat.id, "Кажется, кто-то так и не принял решение: выбрать ещё одну характеристику фильма или нет ): Жду...")
     else:  # Под "остальным" понимаем состояние "0" - начало диалога
-        bot.send_message(message.chat.id, "Здравствуйте! Введите название фильма/сериала:")
+        bot.send_message(message.chat.id, "Здравствуйте! Введите название фильма/сериала: (если в какой-либо момент захотите начать диалог сначала, напишите команду /reset)")
         dbworker.set_state(message.chat.id, config.States.S_ENTER_FILM.value)
 
 
@@ -77,8 +77,8 @@ def user_entering_true_film(message):
             bot.send_message(message.chat.id, "Выберите, какая информация о фильме/сериале вас интересует:")
             bot.send_message(message.chat.id, "дата выхода в России - date,")
             bot.send_message(message.chat.id, "сборы фильма - box office,")
-            bot.send_message(message.chat.id, "список актеров - actors,")
-            bot.send_message(message.chat.id, "список режиссеров - directors.")
+            bot.send_message(message.chat.id, "список актёров - actors,")
+            bot.send_message(message.chat.id, "список режиссёров - directors.")
             dbworker.set_state(message.chat.id, config.States.S_ENTER_COMMAND.value)
 
 
@@ -112,11 +112,11 @@ def user_ending(message):
         bot.send_message(message.chat.id, "Выберите, какая информация о фильме/сериале вас интересует:")
         bot.send_message(message.chat.id, "дата выхода в России - date,")
         bot.send_message(message.chat.id, "сборы фильма - box office,")
-        bot.send_message(message.chat.id, "список актерев - actors,")
-        bot.send_message(message.chat.id, "список режиссеров - directors.")
+        bot.send_message(message.chat.id, "список актёров - actors,")
+        bot.send_message(message.chat.id, "список режиссёров - directors.")
         dbworker.set_state(message.chat.id, config.States.S_ENTER_COMMAND.value)
     elif message.text == 'yes':
-        bot.send_message(message.chat.id, "Отлично! Больше от вас ничего не требуется. Если захотите пообщаться снова - отправь команду /start.")
+        bot.send_message(message.chat.id, "Отлично! Больше от вас ничего не требуется. Если захотите пообщаться снова - отправьте команду /start.")
         dbworker.set_state(message.chat.id, config.States.S_START.value)
     else:
         bot.send_message(message.chat.id, "Я вас не понимаю! Пожалуйста, напишите 'yes' или 'no' (без кавычек)!")
