@@ -46,7 +46,7 @@ def user_entering_film(message):
         for movie in movies:
             try:
                 output = "{0} - {1}".format(movie, movie.data['year'])
-            except:
+            except KeyError:
                 output = "{0}".format(movie)
             bot.send_message(message.chat.id, output)
         dbworker.set_state(message.chat.id, config.States.S_ENTER_TRUE_FILM.value)
@@ -78,7 +78,10 @@ def user_entering_true_film(message):
             bot.send_message(message.chat.id, "дата выхода в России - date,")
             bot.send_message(message.chat.id, "сборы фильма - box office,")
             bot.send_message(message.chat.id, "список актёров - actors,")
-            bot.send_message(message.chat.id, "список режиссёров - directors.")
+            bot.send_message(message.chat.id, "список режиссёров - directors,")
+            bot.send_message(message.chat.id, "список сценаристов - writers,")
+            bot.send_message(message.chat.id, "список продюссеров - producers,")
+            bot.send_message(message.chat.id, "список композиторов  - composers.")
             dbworker.set_state(message.chat.id, config.States.S_ENTER_COMMAND.value)
 
 
@@ -86,18 +89,37 @@ def user_entering_true_film(message):
 def user_entering_command(message):
     global result_movie
     request = message.text
-    if request in ['date', 'box office', 'actors', 'directors']:
+    if request in ['date', 'box office', 'actors', 'directors', 'writers', 'producers', 'composers']:
         try:
             if request == 'date':
                 bot.send_message(message.chat.id, result_movie.data['original air date'])
             elif request == 'box office':
                 bot.send_message(message.chat.id, result_movie.data['box office']['Cumulative Worldwide Gross'])
             elif request == 'actors':
+                actor_list = []
                 for actor in result_movie['cast']:
-                    bot.send_message(message.chat.id, str(actor))
+                    actor_list.append(str(actor))
+                bot.send_message(message.chat.id, ', '.join(actor_list).rstrip(', '))
             elif request == 'directors':
+                director_list = []
                 for director in result_movie.data['director']:
-                    bot.send_message(message.chat.id, str(director))
+                    director_list.append(str(director))
+                bot.send_message(message.chat.id, ', '.join(director_list).rstrip(', '))
+            elif request == 'writers':
+                writer_list = []
+                for writer in result_movie.data['writer']:
+                    writer_list.append(str(writer))
+                bot.send_message(message.chat.id, ', '.join(writer_list).rstrip(', '))
+            elif request == 'producers':
+                producer_list = []
+                for producer in result_movie.data['producer']:
+                    producer_list.append(str(producer))
+                bot.send_message(message.chat.id, ', '.join(producer_list).rstrip(', '))
+            elif request == 'composers':
+                composer_list = []
+                for composer in result_movie.data['composer']:
+                    composer_list.append(str(composer))
+                bot.send_message(message.chat.id, ', '.join(composer_list).rstrip(', '))
         except KeyError:
             bot.send_message(message.chat.id, "Такой информации об этом фильме/сериале нет в моих базах данных.")
     else:
@@ -113,7 +135,10 @@ def user_ending(message):
         bot.send_message(message.chat.id, "дата выхода в России - date,")
         bot.send_message(message.chat.id, "сборы фильма - box office,")
         bot.send_message(message.chat.id, "список актёров - actors,")
-        bot.send_message(message.chat.id, "список режиссёров - directors.")
+        bot.send_message(message.chat.id, "список режиссёров - directors,")
+        bot.send_message(message.chat.id, "список сценаристов - writers,")
+        bot.send_message(message.chat.id, "список продюссеров - producers,")
+        bot.send_message(message.chat.id, "список композиторов  - composers.")
         dbworker.set_state(message.chat.id, config.States.S_ENTER_COMMAND.value)
     elif message.text == 'yes':
         bot.send_message(message.chat.id, "Отлично! Больше от вас ничего не требуется. Если захотите пообщаться снова - отправьте команду /start.")
