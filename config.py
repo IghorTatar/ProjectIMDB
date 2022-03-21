@@ -10,7 +10,8 @@ class States(Enum):
     поэтому и тут будем использовать тоже строки (str)
     """
     S_START = "0"  # Начало нового диалога
-    S_ENTER_FILM = "1"
-    S_ENTER_TRUE_FILM = "2"
-    S_ENTER_COMMAND = "3"
-    S_END = "4"
+    S_CHOOSE = "1"
+    S_ENTER_FILM = "2"
+    S_ENTER_TRUE_FILM = "3"
+    S_ENTER_COMMAND = "4"
+    S_END = "5"
